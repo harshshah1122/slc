@@ -4,8 +4,6 @@ from tkinter import *
 import pandas as pd
 import openpyxl as op
 import re
-import smtplib
-import dns.resolver
 
 
 def logout(window):
@@ -253,6 +251,15 @@ def yourPosition(z, page1, x, y, tot, x2, y2, x3, y3, x4, y4):
     finalScore = sum(nameParticipationList)
     showScore = Label(page1, text=finalScore, font=('yu gothic ui', 16, 'bold'), bg='#36454F', fg='white')
     showScore.place(x=x, y=y)
+    if 6 > finalScore >= 3:
+        showPrize = Label(page1, text="Homework Pass", font=('yu gothic ui', 16, 'bold'), bg='#36454F', fg='white')
+        showPrize.place(x=x4, y=y4)
+    if 9 > finalScore >= 6:
+        showPrize = Label(page1, text="Pizza", font=('yu gothic ui', 16, 'bold'), bg='#36454F', fg='white')
+        showPrize.place(x=x4, y=y4)
+    if finalScore >= 9:
+        showPrize = Label(page1, text="School T-Shirt", font=('yu gothic ui', 16, 'bold'), bg='#36454F', fg='white')
+        showPrize.place(x=x4, y=y4)
 
     # LEADER
     mainList = []
@@ -280,10 +287,6 @@ def yourPosition(z, page1, x, y, tot, x2, y2, x3, y3, x4, y4):
     leaderLabelName = Label(page1, text=firstName + ' ' + lastName,
                             font=('yu gothic ui', 15, 'bold'), bg='#36454F', fg='white')
     leaderLabelName.place(x=x3, y=y3)
-
-
-
-
 
 
 def openInfoSport(var, Type, yourcode, sport):
@@ -570,9 +573,6 @@ def dashboard(firstName, lastName, schoolName, schoolYear, emailID, index):
     scoreBoardLabel = Label(page4, text='Scoreboard:', font=('yu gothic ui', 30, 'bold'), bg='#36454F', fg='white')
     scoreBoardLabel.place(x=30, y=100)
 
-    winnersLabel = Label(page4, text='Winners:', font=('yu gothic ui', 30, 'bold'), bg='#36454F', fg='white')
-    winnersLabel.place(x=430, y=100)
-
     yourLabel = Label(page4, text='Your Score:', font=('yu gothic ui', 15, 'bold'), bg='#36454F', fg='white')
     yourLabel.place(x=30, y=180)
 
@@ -581,10 +581,13 @@ def dashboard(firstName, lastName, schoolName, schoolYear, emailID, index):
 
     df = pd.read_excel('Book1.xlsx')
     maxCol = len(df['First Name'])
-    yourPosition(index, page4, x=140, y=180, tot=maxCol, x2=170, y2=230, x3=30, y3=340, x4=430, y4=210)
+    yourPosition(index, page4, x=140, y=180, tot=maxCol, x2=170, y2=230, x3=30, y3=340, x4=30, y4=460)
 
     leaderNameLabel = Label(page4, text='Leader: ', font=('yu gothic ui', 20, 'bold'), bg='#36454F', fg='white')
     leaderNameLabel.place(x=30, y=300)
+
+    showPrize = Label(page4, text="Your Prize:  ", font=('yu gothic ui', 16, 'bold'), bg='#36454F', fg='white')
+    showPrize.place(x=30, y=420)
 
     # place the buttons
 
