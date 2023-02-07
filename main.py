@@ -3,6 +3,9 @@ import tkinter.messagebox
 from tkinter import *
 import pandas as pd
 import openpyxl as op
+import re
+import smtplib
+import dns.resolver
 
 
 def logout(window):
@@ -11,13 +14,13 @@ def logout(window):
 
 
 def dashboardFunc(page, window, page2, page3, page4, page5, page6, page7, page8, page9, page10, number, colNum):
-    entry_code = Entry(page, highlightthickness=0, relief=FLAT, bg="#040405", fg="#6b6a69",
+    entry_code = Entry(page, highlightthickness=0, relief=FLAT, bg="#36454F", fg="#6b6a69",
                        font=("yu gothic ui", 105, "bold"))
 
     entry_code.place(x=70, y=140, height=150, width=460)
 
     loginButtonOne = Button(page, text="Click to Check-in Student", font=('yu gothic ui', 25, 'bold'), fg="white",
-                            bg="#040405",
+                            bg="#36454F",
                             borderwidth=0,
                             command=lambda: crosscheckOne(entry_code, number=number, columnNumber=colNum))
     loginButtonOne.place(x=90, y=350)
@@ -119,8 +122,8 @@ def show_frame_no_entry(interior):
 
 def mainSetup(page, page2, page3, page4, page5, page6, page7, page8, page9, page10, entry, window):
     # Page 1
-    instructText = Label(page, text="Enter Event Code:", font=('yu gothic ui', 35, 'bold'), bg='#040405',
-                         fg='#4e4f4d')
+    instructText = Label(page, text="Enter Event Code:", font=('yu gothic ui', 35, 'bold'), bg='#36454F',
+                         fg='white')
     instructText.place(x=100, y=50)
 
     line = Canvas(page, width=460, height=2.0, bg="#bdb9b1", highlightthickness=0)
@@ -129,43 +132,43 @@ def mainSetup(page, page2, page3, page4, page5, page6, page7, page8, page9, page
     # Flip Buttons
     sportEventOneButton = Button(page, text='Sport 1', font=('yu gothic ui', 15, 'bold'),
                                  command=lambda: show_frame(interior=page, entry=entry, window=window, number='1'),
-                                 bg='#040405', fg='white')
+                                 bg='#36454F', fg='white')
     sportEventTwoButton = Button(page, text='Sport 2', font=('yu gothic ui', 15, 'bold'),
                                  command=lambda: show_frame(interior=page2, entry=entry, window=window, number='2'),
-                                 bg='#040405', fg='white')
+                                 bg='#36454F', fg='white')
     sportEventThreeButton = Button(page, text='Sport 3', font=('yu gothic ui', 15, 'bold'),
                                    command=lambda: show_frame(interior=page3, entry=entry, window=window, number='3'),
-                                   bg='#040405', fg='white')
+                                   bg='#36454F', fg='white')
     sportEventFourButton = Button(page, text='Sport 4', font=('yu gothic ui', 15, 'bold'),
                                   command=lambda: show_frame(interior=page4, entry=entry, window=window, number='4'),
-                                  bg='#040405', fg='white')
+                                  bg='#36454F', fg='white')
     sportEventFiveButton = Button(page, text='Sport 5', font=('yu gothic ui', 15, 'bold'),
                                   command=lambda: show_frame(interior=page5, entry=entry, window=window, number='5'),
-                                  bg='#040405', fg='white')
+                                  bg='#36454F', fg='white')
 
     funEventOneButton = Button(page, text='Fun 1', font=('yu gothic ui', 15, 'bold'),
                                command=lambda: show_frame(interior=page6, entry=entry, window=window, number='6'),
-                               bg='#040405', fg='white')
+                               bg='#36454F', fg='white')
     funEventTwoButton = Button(page, text='Fun 2', font=('yu gothic ui', 15, 'bold'),
                                command=lambda: show_frame(interior=page7, entry=entry, window=window, number='7'),
-                               bg='#040405', fg='white')
+                               bg='#36454F', fg='white')
     funEventThreeButton = Button(page, text='Fun 3', font=('yu gothic ui', 15, 'bold'),
                                  command=lambda: show_frame(interior=page8, entry=entry, window=window, number='8'),
-                                 bg='#040405', fg='white')
+                                 bg='#36454F', fg='white')
     funEventFourButton = Button(page, text='Fun 4', font=('yu gothic ui', 15, 'bold'),
                                 command=lambda: show_frame(interior=page9, entry=entry, window=window, number='9'),
-                                bg='#040405', fg='white')
-    funEventFiveButton = Button(page, text='Fun 5', font=('yu gothic ui', 15, 'bold'), bg='#040405', fg='white',
+                                bg='#36454F', fg='white')
+    funEventFiveButton = Button(page, text='Fun 5', font=('yu gothic ui', 15, 'bold'), bg='#36454F', fg='white',
                                 command=lambda: show_frame(interior=page10, entry=entry, window=window, number='10'))
 
     # Max Columns
     df = pd.read_excel('Book1.xlsx')
     maxCol = len(df['First Name'])
 
-    winnerButton = Button(page, text='Final Winner', font=('yu gothic ui', 15, 'bold'), bg='#040405', fg='white',
+    winnerButton = Button(page, text='Final Winner', font=('yu gothic ui', 15, 'bold'), bg='#36454F', fg='white',
                           command=lambda: finalWinner(tot=maxCol))
 
-    logoutButton = Button(page, text='Logout', font=('yu gothic ui', 15, 'bold'), bg='#040405', fg='white',
+    logoutButton = Button(page, text='Logout', font=('yu gothic ui', 15, 'bold'), bg='#36454F', fg='white',
                           command=lambda: logout(window))
 
     sportEventOneButton.place(x=0, y=450, width=120)
@@ -190,16 +193,16 @@ def MainEventSupervisor():
     window.columnconfigure(0, weight=1)
     window.geometry('600x600')
 
-    page1 = Frame(window, bg='#040405')
-    page2 = Frame(window, bg='#040405')
-    page3 = Frame(window, bg='#040405')
-    page4 = Frame(window, bg='#040405')
-    page5 = Frame(window, bg='#040405')
-    page6 = Frame(window, bg='#040405')
-    page7 = Frame(window, bg='#040405')
-    page8 = Frame(window, bg='#040405')
-    page9 = Frame(window, bg='#040405')
-    page10 = Frame(window, bg='#040405')
+    page1 = Frame(window, bg='#36454F')
+    page2 = Frame(window, bg='#36454F')
+    page3 = Frame(window, bg='#36454F')
+    page4 = Frame(window, bg='#36454F')
+    page5 = Frame(window, bg='#36454F')
+    page6 = Frame(window, bg='#36454F')
+    page7 = Frame(window, bg='#36454F')
+    page8 = Frame(window, bg='#36454F')
+    page9 = Frame(window, bg='#36454F')
+    page10 = Frame(window, bg='#36454F')
 
     for frame in (page1, page2, page3, page4, page5, page6, page7, page8, page9, page10):
         frame.grid(row=0, column=0, sticky='nsew')
@@ -240,7 +243,7 @@ def MainEventSupervisor():
     window.mainloop()
 
 
-def yourPosition(z, page1, x, y, tot, x2, y2, x3, y3, x4, y4, x5, y5, x6, y6):
+def yourPosition(z, page1, x, y, tot, x2, y2, x3, y3, x4, y4):
     df = pd.read_excel('eventAttendance.xlsx', engine='openpyxl', dtype=object, header=None)
     list1 = df.values.tolist()
     list1.pop(0)
@@ -248,7 +251,7 @@ def yourPosition(z, page1, x, y, tot, x2, y2, x3, y3, x4, y4, x5, y5, x6, y6):
     nameParticipationListExtract = list1[z - 2]
     nameParticipationList = [int(i) for i in nameParticipationListExtract]
     finalScore = sum(nameParticipationList)
-    showScore = Label(page1, text=finalScore, font=('yu gothic ui', 16, 'bold'), bg='#040405', fg='white')
+    showScore = Label(page1, text=finalScore, font=('yu gothic ui', 16, 'bold'), bg='#36454F', fg='white')
     showScore.place(x=x, y=y)
 
     # LEADER
@@ -262,7 +265,7 @@ def yourPosition(z, page1, x, y, tot, x2, y2, x3, y3, x4, y4, x5, y5, x6, y6):
         i = i + 1
     leaderScore = max(mainList)
     leaderScoreIndex = mainList.index(leaderScore)
-    leaderScoreLabel = Label(page1, text=leaderScore, font=('yu gothic ui', 15, 'bold'), bg='#040405', fg='white')
+    leaderScoreLabel = Label(page1, text=leaderScore, font=('yu gothic ui', 15, 'bold'), bg='#36454F', fg='white')
     leaderScoreLabel.place(x=x2, y=y2)
 
     df2 = pd.read_excel('Book1.xlsx')
@@ -275,64 +278,31 @@ def yourPosition(z, page1, x, y, tot, x2, y2, x3, y3, x4, y4, x5, y5, x6, y6):
     firstName = firstNameList[leaderScoreIndex]
     lastName = lastNameList[leaderScoreIndex]
     leaderLabelName = Label(page1, text=firstName + ' ' + lastName,
-                            font=('yu gothic ui', 15, 'bold'), bg='#040405', fg='white')
+                            font=('yu gothic ui', 15, 'bold'), bg='#36454F', fg='white')
     leaderLabelName.place(x=x3, y=y3)
 
-    winnerList = df2['Winner'].to_list()
-    if 'First' in winnerList:
-        winnerIndex = winnerList.index('First')
-        winnerFirstName = firstNameList[winnerIndex]
-        winnerLastName = lastNameList[winnerIndex]
-        winnerLabelName = Label(page1, text=winnerFirstName + ' ' + winnerLastName,
-                                font=('yu gothic ui', 15, 'bold'), bg='#040405', fg='white')
-        winnerLabelName.place(x=x4, y=y4)
-    else:
-        winnerLabelName = Label(page1, text="TBD",
-                                font=('yu gothic ui', 15, 'bold'), bg='#040405', fg='white')
-        winnerLabelName.place(x=x4, y=y4)
-
-    if 'Second' in winnerList:
-        secondIndex = winnerList.index('Second')
-        secondFirstName = firstNameList[secondIndex]
-        secondLastName = lastNameList[secondIndex]
-        secondLabelName = Label(page1, text=secondFirstName + ' ' + secondLastName,
-                                font=('yu gothic ui', 15, 'bold'), bg='#040405', fg='white')
-        secondLabelName.place(x=x5, y=y5)
-    else:
-        secondLabelName = Label(page1, text="TBD",
-                                font=('yu gothic ui', 15, 'bold'), bg='#040405', fg='white')
-        secondLabelName.place(x=x5, y=y5)
-
-    if 'Third' in winnerList:
-        thirdIndex = winnerList.index('Third')
-        thirdFirstName = firstNameList[thirdIndex]
-        thirdLastName = lastNameList[thirdIndex]
-        thirdLabelName = Label(page1, text=thirdFirstName + ' ' + thirdLastName,
-                               font=('yu gothic ui', 15, 'bold'), bg='#040405', fg='white')
-        thirdLabelName.place(x=x6, y=y6)
-    else:
-        thirdLabelName = Label(page1, text="TBD",
-                               font=('yu gothic ui', 15, 'bold'), bg='#040405', fg='white')
-        thirdLabelName.place(x=x6, y=y6)
 
 
-def openInfoSport(var, Type, yourcode):
+
+
+
+def openInfoSport(var, Type, yourcode, sport):
     newWindow = Tk()
     newWindow.geometry('600x500')
-    newWindow.config(bg='#b8c9e6')
-    headerLabel = Label(newWindow, text=f'{Type} Event {var}:', font=('yu gothic ui', 40, 'bold'), bg='#b8c9e6',
-                        fg='#4e4f4d')
+    newWindow.config(bg='#36454F')
+    headerLabel = Label(newWindow, text=f'{Type} Event {var}: {sport}', font=('yu gothic ui', 40, 'bold'), bg='#36454F',
+                        fg='white')
     headerLabel.place(x=20, y=20)
 
     infoLabel = Label(newWindow,
                       text='Lorem ipsum dolor sit\namet, consectetur adipiscing elit,\nsed do eiusmod tempor\n'
                            'incididunt ut labore et\ndolore magna aliqua.',
-                      font=('yu gothic ui', 25), bg='#b8c9e6',
-                      fg='#4e4f4d', justify=LEFT)
+                      font=('yu gothic ui', 25), bg='#36454F',
+                      fg='white', justify=LEFT)
     infoLabel.place(x=20, y=100)
 
-    yourCode = Label(newWindow, text=f'Your Code: {yourcode}', font=('yu gothic ui', 35, 'bold'), bg='#b8c9e6',
-                     fg='#4e4f4d')
+    yourCode = Label(newWindow, text=f'Your Code: {yourcode}', font=('yu gothic ui', 35, 'bold'), bg='#36454F',
+                     fg='white')
     yourCode.place(x=20, y=400)
 
     newWindow.mainloop()
@@ -344,7 +314,7 @@ def show_frame(interior):
 
 def eventoneCode(window, eventonecode, index, number, intNumber):
     label = Label(window, text=eventonecode, font=('yu gothic ui', 65, 'bold'),
-                  bg='#040405', fg='white')
+                  bg='#36454F', fg='white')
     label.place(x=270, y=200)
 
     wb = op.load_workbook('eventCodes.xlsx')
@@ -399,10 +369,10 @@ def dashboard(firstName, lastName, schoolName, schoolYear, emailID, index):
     window.columnconfigure(0, weight=1)
     window.geometry('800x600')
 
-    page1 = Frame(window, bg='#040405')
-    page2 = Frame(window, bg='#040405')
-    page3 = Frame(window, bg='#040405')
-    page4 = Frame(window, bg='#040405')
+    page1 = Frame(window, bg='#36454F')
+    page2 = Frame(window, bg='#36454F')
+    page3 = Frame(window, bg='#36454F')
+    page4 = Frame(window, bg='#36454F')
 
     for frame in (page1, page2, page3, page4):
         frame.grid(row=0, column=0, sticky='nsew')
@@ -410,13 +380,13 @@ def dashboard(firstName, lastName, schoolName, schoolYear, emailID, index):
     show_frame(page1)
     # ======== Page 2 ===========
     homeButton = Button(page1, text='Home', font=('yu gothic ui', 15, 'bold'), command=lambda: show_frame(page1),
-                        bg='#040405', fg='white')
+                        bg='#36454F', fg='white')
     eventButton = Button(page1, text='Events', font=('yu gothic ui', 15, 'bold'), command=lambda: show_frame(page2),
-                         bg='#040405', fg='white')
+                         bg='#36454F', fg='white')
     attendanceButton = Button(page1, text='Participation', font=('yu gothic ui', 15, 'bold'),
-                              command=lambda: show_frame(page3), bg='#040405', fg='white')
+                              command=lambda: show_frame(page3), bg='#36454F', fg='white')
     lotteryButton = Button(page1, text='Prizes', font=('yu gothic ui', 15, 'bold'), command=lambda: show_frame(page4),
-                           bg='#040405', fg='white')
+                           bg='#36454F', fg='white')
 
     # place the buttons
 
@@ -426,26 +396,26 @@ def dashboard(firstName, lastName, schoolName, schoolYear, emailID, index):
     lotteryButton.place(x=600, y=0, width=200)
 
     # Define labels to display Personal Information
-    headingLabel = Label(page1, text='Personal Information', font=('yu gothic ui', 30, 'bold'), bg='#040405',
+    headingLabel = Label(page1, text='Personal Information', font=('yu gothic ui', 30, 'bold'), bg='#36454F',
                          fg='white')
     nameHeaderLabel = Label(page1, text='Name: ', font=('yu gothic ui', 15, 'bold'),
-                            bg='#040405', fg='#4e4f4d')
+                            bg='#36454F', fg='white')
     nameLabel = Label(page1, text=firstName + ' ' + lastName, font=('yu gothic ui', 15, 'bold'),
-                      bg='#040405', fg='white')
+                      bg='#36454F', fg='white')
     schoolNameHeaderLabel = Label(page1, text='School Name: ', font=('yu gothic ui', 15, 'bold'),
-                                  bg='#040405', fg='#4e4f4d')
+                                  bg='#36454F', fg='white')
     schoolNameLabel = Label(page1, text=schoolName, font=('yu gothic ui', 15, 'bold'),
-                            bg='#040405', fg='white')
+                            bg='#36454F', fg='white')
     schoolYearHeaderLabel = Label(page1, text='School Year: ', font=('yu gothic ui', 15, 'bold'),
-                                  bg='#040405', fg='#4e4f4d')
+                                  bg='#36454F', fg='white')
     schoolYearLabel = Label(page1, text=schoolYear, font=('yu gothic ui', 15, 'bold'),
-                            bg='#040405', fg='white')
+                            bg='#36454F', fg='white')
     emailHeaderLabel = Label(page1, text='Email ID: ', font=('yu gothic ui', 15, 'bold'),
-                             bg='#040405', fg='#4e4f4d')
+                             bg='#36454F', fg='white')
     emailLabel = Label(page1, text=emailID, font=('yu gothic ui', 15, 'bold'),
-                       bg='#040405', fg='white')
+                       bg='#36454F', fg='white')
 
-    logoutButton = Button(page1, text='Logout', font=('yu gothic ui', 15, 'bold'), bg='#040405', fg='white',
+    logoutButton = Button(page1, text='Logout', font=('yu gothic ui', 15, 'bold'), bg='#36454F', fg='white',
                           command=lambda: logout(window))
 
     logoutButton.place(x=715, y=550)
@@ -463,34 +433,34 @@ def dashboard(firstName, lastName, schoolName, schoolYear, emailID, index):
     emailHeaderLabel.place(x=30, y=360)
 
     # Event Buttons
-    eventOneButton = Button(page3, text='Event One', font=('yu gothic ui', 18, 'bold'), bg='#040405',
+    eventOneButton = Button(page3, text='Event One', font=('yu gothic ui', 18, 'bold'), bg='#36454F',
                             fg='white',
                             command=lambda: eventoneCode(window, eventOneCode, index, number='One', intNumber=1))
-    eventTwoButton = Button(page3, text='Event Two', font=('yu gothic ui', 18, 'bold'), bg='#040405',
+    eventTwoButton = Button(page3, text='Event Two', font=('yu gothic ui', 18, 'bold'), bg='#36454F',
                             fg='white',
                             command=lambda: eventoneCode(window, eventTwoCode, index, number='Two', intNumber=2))
-    eventThreeButton = Button(page3, text='Event Three', font=('yu gothic ui', 18, 'bold'), bg='#040405',
+    eventThreeButton = Button(page3, text='Event Three', font=('yu gothic ui', 18, 'bold'), bg='#36454F',
                               fg='white',
                               command=lambda: eventoneCode(window, eventThreeCode, index, number='Three', intNumber=3))
-    eventFourButton = Button(page3, text='Event Four', font=('yu gothic ui', 18, 'bold'), bg='#040405',
+    eventFourButton = Button(page3, text='Event Four', font=('yu gothic ui', 18, 'bold'), bg='#36454F',
                              fg='white',
                              command=lambda: eventoneCode(window, eventFourCode, index, number='Four', intNumber=4))
-    eventFiveButton = Button(page3, text='Event Five', font=('yu gothic ui', 18, 'bold'), bg='#040405',
+    eventFiveButton = Button(page3, text='Event Five', font=('yu gothic ui', 18, 'bold'), bg='#36454F',
                              fg='white',
                              command=lambda: eventoneCode(window, eventFiveCode, index, number='Five', intNumber=5))
-    eventSixButton = Button(page3, text='Event Six', font=('yu gothic ui', 18, 'bold'), bg='#040405',
+    eventSixButton = Button(page3, text='Event Six', font=('yu gothic ui', 18, 'bold'), bg='#36454F',
                             fg='white',
                             command=lambda: eventoneCode(window, eventSixCode, index, number='Six', intNumber=6))
-    eventSevenButton = Button(page3, text='Event Seven', font=('yu gothic ui', 18, 'bold'), bg='#040405',
+    eventSevenButton = Button(page3, text='Event Seven', font=('yu gothic ui', 18, 'bold'), bg='#36454F',
                               fg='white',
                               command=lambda: eventoneCode(window, eventSevenCode, index, number='Seven', intNumber=7))
-    eventEightButton = Button(page3, text='Event Eight', font=('yu gothic ui', 18, 'bold'), bg='#040405',
+    eventEightButton = Button(page3, text='Event Eight', font=('yu gothic ui', 18, 'bold'), bg='#36454F',
                               fg='white',
                               command=lambda: eventoneCode(window, eventEightCode, index, number='Eight', intNumber=8))
-    eventNineButton = Button(page3, text='Event Nine', font=('yu gothic ui', 18, 'bold'), bg='#040405',
+    eventNineButton = Button(page3, text='Event Nine', font=('yu gothic ui', 18, 'bold'), bg='#36454F',
                              fg='white',
                              command=lambda: eventoneCode(window, eventNineCode, index, number='Nine', intNumber=9))
-    eventTenButton = Button(page3, text='Event Nine', font=('yu gothic ui', 18, 'bold'), bg='#040405',
+    eventTenButton = Button(page3, text='Event Nine', font=('yu gothic ui', 18, 'bold'), bg='#36454F',
                             fg='white',
                             command=lambda: eventoneCode(window, eventTenCode, index, number='Ten', intNumber=10))
 
@@ -505,52 +475,62 @@ def dashboard(firstName, lastName, schoolName, schoolYear, emailID, index):
     eventNineButton.place(x=480, y=550, width=160)
     eventTenButton.place(x=640, y=550, width=160)
 
-    infoLabel = Label(page3, text='Your Code is:', font=('yu gothic ui', 25, 'bold'), bg='#040405', fg='#4e4f4d')
+    infoLabel = Label(page3, text='Your Code is:', font=('yu gothic ui', 25, 'bold'), bg='#36454F', fg='white')
     infoLabel.place(x=295, y=140)
 
     # ======== Page 2 ===========
     homeButton = Button(page2, text='Home', font=('yu gothic ui', 15, 'bold'), command=lambda: show_frame(page1),
-                        bg='#040405', fg='white')
+                        bg='#36454F', fg='white')
     eventButton = Button(page2, text='Events', font=('yu gothic ui', 15, 'bold'), command=lambda: show_frame(page2),
-                         bg='#040405', fg='white')
+                         bg='#36454F', fg='white')
     attendanceButton = Button(page2, text='Participation', font=('yu gothic ui', 15, 'bold'),
-                              command=lambda: show_frame(page3), bg='#040405', fg='white')
+                              command=lambda: show_frame(page3), bg='#36454F', fg='white')
     lotteryButton = Button(page2, text='Prizes', font=('yu gothic ui', 15, 'bold'), command=lambda: show_frame(page4),
-                           bg='#040405', fg='white')
+                           bg='#36454F', fg='white')
 
-    headerLabel = Label(page2, text='Upcoming Events:', font=('yu gothic ui', 30, 'bold'), bg='#040405',
+    headerLabel = Label(page2, text='Upcoming Events:', font=('yu gothic ui', 30, 'bold'), bg='#36454F',
                         fg='white')
     headerLabel.place(x=30, y=100)
 
-    eventOneDisplayButton = Button(page2, text='Sport\nOne', font=('yu gothic ui', 30, 'bold'), bg='white',
-                                   fg='black', command=lambda: openInfoSport('1', 'Sport', eventOneCodeExtract))
+    eventOneDisplayButton = Button(page2, text='Sport\nOne', font=('yu gothic ui', 30, 'bold'), bg='#556d7c',
+                                   fg='black',
+                                   command=lambda: openInfoSport('1', 'Sport', eventOneCodeExtract, sport="Basketball"))
     eventOneDisplayButton.place(x=30, y=200, width=140, height=150)
-    eventTwoDisplayButton = Button(page2, text='Sport\nTwo', font=('yu gothic ui', 30, 'bold'), bg='white',
-                                   fg='black', command=lambda: openInfoSport('2', 'Sport', eventTwoCodeExtract))
+    eventTwoDisplayButton = Button(page2, text='Sport\nTwo', font=('yu gothic ui', 30, 'bold'), bg='#556d7c',
+                                   fg='black',
+                                   command=lambda: openInfoSport('2', 'Sport', eventTwoCodeExtract, sport="Baseball"))
     eventTwoDisplayButton.place(x=180, y=200, width=140, height=150)
-    eventThreeDisplayButton = Button(page2, text='Sport\nThree', font=('yu gothic ui', 30, 'bold'), bg='white',
-                                     fg='black', command=lambda: openInfoSport('3', 'Sport', eventThreeCodeExtract))
+    eventThreeDisplayButton = Button(page2, text='Sport\nThree', font=('yu gothic ui', 30, 'bold'), bg='#556d7c',
+                                     fg='black',
+                                     command=lambda: openInfoSport('3', 'Sport', eventThreeCodeExtract, sport="Soccer"))
     eventThreeDisplayButton.place(x=330, y=200, width=140, height=150)
-    eventFourDisplayButton = Button(page2, text='Sport\nFour', font=('yu gothic ui', 30, 'bold'), bg='white',
-                                    fg='black', command=lambda: openInfoSport('4', 'Sport', eventFourCodeExtract))
+    eventFourDisplayButton = Button(page2, text='Sport\nFour', font=('yu gothic ui', 30, 'bold'), bg='#556d7c',
+                                    fg='black', command=lambda: openInfoSport('4', 'Sport', eventFourCodeExtract,
+                                                                              sport="Volleyball"))
     eventFourDisplayButton.place(x=480, y=200, width=140, height=150)
-    eventFiveDisplayButton = Button(page2, text='Sport\nFive', font=('yu gothic ui', 30, 'bold'), bg='white',
-                                    fg='black', command=lambda: openInfoSport('5', 'Sport', eventFiveCodeExtract))
+    eventFiveDisplayButton = Button(page2, text='Sport\nFive', font=('yu gothic ui', 30, 'bold'), bg='#556d7c',
+                                    fg='black',
+                                    command=lambda: openInfoSport('5', 'Sport', eventFiveCodeExtract, sport="Chess"))
     eventFiveDisplayButton.place(x=630, y=200, width=140, height=150)
-    eventSixDisplayButton = Button(page2, text='Fun\nOne', font=('yu gothic ui', 30, 'bold'), bg='white',
-                                   fg='black', command=lambda: openInfoSport('1', 'Fun', eventSixCodeExtract))
+    eventSixDisplayButton = Button(page2, text='Fun\nOne', font=('yu gothic ui', 30, 'bold'), bg='#556d7c',
+                                   fg='black',
+                                   command=lambda: openInfoSport('1', 'Fun', eventSixCodeExtract, sport="Prom"))
     eventSixDisplayButton.place(x=30, y=400, width=140, height=150)
-    eventSevenDisplayButton = Button(page2, text='Fun\nTwo', font=('yu gothic ui', 30, 'bold'), bg='white',
-                                     fg='black', command=lambda: openInfoSport('2', 'Fun', eventSevenCodeExtract))
+    eventSevenDisplayButton = Button(page2, text='Fun\nTwo', font=('yu gothic ui', 30, 'bold'), bg='#556d7c',
+                                     fg='black', command=lambda: openInfoSport('2', 'Fun', eventSevenCodeExtract,
+                                                                               sport="Spirit Night"))
     eventSevenDisplayButton.place(x=180, y=400, width=140, height=150)
-    eventEightDisplayButton = Button(page2, text='Fun\nThree', font=('yu gothic ui', 30, 'bold'), bg='white',
-                                     fg='black', command=lambda: openInfoSport('3', 'Fun', eventEightCodeExtract))
+    eventEightDisplayButton = Button(page2, text='Fun\nThree', font=('yu gothic ui', 30, 'bold'), bg='#556d7c',
+                                     fg='black', command=lambda: openInfoSport('3', 'Fun', eventEightCodeExtract,
+                                                                               sport="Homecoming"))
     eventEightDisplayButton.place(x=330, y=400, width=140, height=150)
-    eventNineDisplayButton = Button(page2, text='Fun\nFour', font=('yu gothic ui', 30, 'bold'), bg='white',
-                                    fg='black', command=lambda: openInfoSport('4', 'Fun', eventNineCodeExtract))
+    eventNineDisplayButton = Button(page2, text='Fun\nFour', font=('yu gothic ui', 30, 'bold'), bg='#556d7c',
+                                    fg='black', command=lambda: openInfoSport('4', 'Fun', eventNineCodeExtract,
+                                                                              sport="International Night"))
     eventNineDisplayButton.place(x=480, y=400, width=140, height=150)
-    eventTenDisplayButton = Button(page2, text='Fun\nFive', font=('yu gothic ui', 30, 'bold'), bg='white',
-                                   fg='black', command=lambda: openInfoSport('5', 'Fun', eventTenCodeExtract))
+    eventTenDisplayButton = Button(page2, text='Fun\nFive', font=('yu gothic ui', 30, 'bold'), bg='#556d7c',
+                                   fg='black',
+                                   command=lambda: openInfoSport('5', 'Fun', eventTenCodeExtract, sport="Drama"))
     eventTenDisplayButton.place(x=630, y=400, width=140, height=150)
 
     # place the buttons
@@ -562,13 +542,13 @@ def dashboard(firstName, lastName, schoolName, schoolYear, emailID, index):
 
     # ======== Page 3 ===========
     homeButton = Button(page3, text='Home', font=('yu gothic ui', 15, 'bold'), command=lambda: show_frame(page1),
-                        bg='#040405', fg='white')
+                        bg='#36454F', fg='white')
     eventButton = Button(page3, text='Events', font=('yu gothic ui', 15, 'bold'), command=lambda: show_frame(page2),
-                         bg='#040405', fg='white')
+                         bg='#36454F', fg='white')
     attendanceButton = Button(page3, text='Participation', font=('yu gothic ui', 15, 'bold'),
-                              command=lambda: show_frame(page3), bg='#040405', fg='white')
+                              command=lambda: show_frame(page3), bg='#36454F', fg='white')
     lotteryButton = Button(page3, text='Prizes', font=('yu gothic ui', 15, 'bold'), command=lambda: show_frame(page4),
-                           bg='#040405', fg='white')
+                           bg='#36454F', fg='white')
 
     # place the buttons
 
@@ -579,42 +559,32 @@ def dashboard(firstName, lastName, schoolName, schoolYear, emailID, index):
 
     # ======== Page 4-Prizes ===========
     homeButton = Button(page4, text='Home', font=('yu gothic ui', 15, 'bold'), command=lambda: show_frame(page1),
-                        bg='#040405', fg='white')
+                        bg='#36454F', fg='white')
     eventButton = Button(page4, text='Events', font=('yu gothic ui', 15, 'bold'), command=lambda: show_frame(page2),
-                         bg='#040405', fg='white')
+                         bg='#36454F', fg='white')
     attendanceButton = Button(page4, text='Participation', font=('yu gothic ui', 15, 'bold'),
-                              command=lambda: show_frame(page3), bg='#040405', fg='white')
+                              command=lambda: show_frame(page3), bg='#36454F', fg='white')
     lotteryButton = Button(page4, text='Prizes', font=('yu gothic ui', 15, 'bold'), command=lambda: show_frame(page4),
-                           bg='#040405', fg='white')
+                           bg='#36454F', fg='white')
 
-    scoreBoardLabel = Label(page4, text='Scoreboard:', font=('yu gothic ui', 30, 'bold'), bg='#040405', fg='white')
+    scoreBoardLabel = Label(page4, text='Scoreboard:', font=('yu gothic ui', 30, 'bold'), bg='#36454F', fg='white')
     scoreBoardLabel.place(x=30, y=100)
 
-    winnersLabel = Label(page4, text='Winners:', font=('yu gothic ui', 30, 'bold'), bg='#040405', fg='white')
+    winnersLabel = Label(page4, text='Winners:', font=('yu gothic ui', 30, 'bold'), bg='#36454F', fg='white')
     winnersLabel.place(x=430, y=100)
 
-    yourLabel = Label(page4, text='Your Score:', font=('yu gothic ui', 15, 'bold'), bg='#040405', fg='#4e4f4d')
+    yourLabel = Label(page4, text='Your Score:', font=('yu gothic ui', 15, 'bold'), bg='#36454F', fg='white')
     yourLabel.place(x=30, y=180)
 
-    leaderLabel = Label(page4, text="Leader's Score:", font=('yu gothic ui', 15, 'bold'), bg='#040405', fg='#4e4f4d')
+    leaderLabel = Label(page4, text="Leader's Score:", font=('yu gothic ui', 15, 'bold'), bg='#36454F', fg='white')
     leaderLabel.place(x=30, y=230)
 
     df = pd.read_excel('Book1.xlsx')
     maxCol = len(df['First Name'])
-    yourPosition(index, page4, x=140, y=180, tot=maxCol, x2=170, y2=230, x3=30, y3=340, x4=430, y4=210, x5=430, y5=280,
-                 x6=430, y6=350)
+    yourPosition(index, page4, x=140, y=180, tot=maxCol, x2=170, y2=230, x3=30, y3=340, x4=430, y4=210)
 
-    leaderNameLabel = Label(page4, text='Leader: ', font=('yu gothic ui', 20, 'bold'), bg='#040405', fg='white')
+    leaderNameLabel = Label(page4, text='Leader: ', font=('yu gothic ui', 20, 'bold'), bg='#36454F', fg='white')
     leaderNameLabel.place(x=30, y=300)
-
-    winnerNameLabel = Label(page4, text='Winner: ', font=('yu gothic ui', 15, 'bold'), bg='#040405', fg='#4e4f4d')
-    winnerNameLabel.place(x=430, y=180)
-
-    secondNameLabel = Label(page4, text='Second Place: ', font=('yu gothic ui', 15, 'bold'), bg='#040405', fg='#4e4f4d')
-    secondNameLabel.place(x=430, y=250)
-
-    thirdNameLabel = Label(page4, text='Third Place: ', font=('yu gothic ui', 15, 'bold'), bg='#040405', fg='#4e4f4d')
-    thirdNameLabel.place(x=430, y=320)
 
     # place the buttons
 
@@ -681,6 +651,10 @@ def getRegisterCredentials(entry1, entry2, entry3, entry4, entry5, entry6, windo
     wb2 = pd.read_excel('Book1.xlsx', sheet_name=0)
     emailList = wb2['Email'].to_list()
     print(emailList)
+    match = re.match('^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$', username)
+    if match is None:
+        tkinter.messagebox.showerror("Error", "Enter a valid Email ID!")
+
     if username in emailList:
         print("Email already registered!")
         tkinter.messagebox.showerror("Error", "Email already registered!")
@@ -695,20 +669,20 @@ def registerNames():
     registerWindow = Tk()
     registerWindow.geometry('700x600')
     registerWindow.title('Create Account')
-    registerWindow.config(bg="#040405")
+    registerWindow.config(bg="#36454F")
     registerWindow.focus_force()  # Focus on the register window
 
     # Title
     titleLabel = Label(registerWindow, text="Account Creation", font=("yu gothic ui", 25, "bold"), fg="white",
-                       bg="#040405")
+                       bg="#36454F")
     titleLabel.place(x=20, y=30)
 
     # Info Entry
     # First Name
     firstNameLabel = Label(registerWindow, text="First Name", font=("yu gothic ui", 15, "bold"), fg="#4f4e4d",
-                           bg="#040405")
+                           bg="#36454F")
     firstNameLabel.place(x=20, y=100)
-    firstNameEntry = Entry(registerWindow, highlightthickness=0, relief=FLAT, bg="#040405", fg="#6b6a69",
+    firstNameEntry = Entry(registerWindow, highlightthickness=0, relief=FLAT, bg="#36454F", fg="#6b6a69",
                            font=("yu gothic ui", 15, "bold"))
     firstNameEntry.place(x=25, y=140, width=270)
     firstNameLine = Canvas(registerWindow, width=270, height=2.0, bg="#bdb9b1", highlightthickness=0)
@@ -716,9 +690,9 @@ def registerNames():
 
     # Last Name
     lastNameLabel = Label(registerWindow, text="Last Name", font=("yu gothic ui", 15, "bold"), fg="#4f4e4d",
-                          bg="#040405")
+                          bg="#36454F")
     lastNameLabel.place(x=20, y=190)
-    lastNameEntry = Entry(registerWindow, highlightthickness=0, relief=FLAT, bg="#040405", fg="#6b6a69",
+    lastNameEntry = Entry(registerWindow, highlightthickness=0, relief=FLAT, bg="#36454F", fg="#6b6a69",
                           font=("yu gothic ui", 15, "bold"))
     lastNameEntry.place(x=25, y=230, width=270)
     lastNameLine = Canvas(registerWindow, width=270, height=2.0, bg="#bdb9b1", highlightthickness=0)
@@ -727,9 +701,9 @@ def registerNames():
     # School
     schoolLabel = Label(registerWindow, text="School Name (Abbreviated)", font=("yu gothic ui", 15, "bold"),
                         fg="#4f4e4d",
-                        bg="#040405")
+                        bg="#36454F")
     schoolLabel.place(x=20, y=280)
-    schoolEntry = Entry(registerWindow, highlightthickness=0, relief=FLAT, bg="#040405", fg="#6b6a69",
+    schoolEntry = Entry(registerWindow, highlightthickness=0, relief=FLAT, bg="#36454F", fg="#6b6a69",
                         font=("yu gothic ui", 15, "bold"))
     schoolEntry.place(x=25, y=320, width=270)
     schoolLine = Canvas(registerWindow, width=270, height=2.0, bg="#bdb9b1", highlightthickness=0)
@@ -738,9 +712,9 @@ def registerNames():
     # School Year
     schoolYearLabel = Label(registerWindow, text="School Year (in numbers)", font=("yu gothic ui", 15, "bold"),
                             fg="#4f4e4d",
-                            bg="#040405")
+                            bg="#36454F")
     schoolYearLabel.place(x=20, y=370)
-    schoolYearEntry = Entry(registerWindow, highlightthickness=0, relief=FLAT, bg="#040405", fg="#6b6a69",
+    schoolYearEntry = Entry(registerWindow, highlightthickness=0, relief=FLAT, bg="#36454F", fg="#6b6a69",
                             font=("yu gothic ui", 15, "bold"))
     schoolYearEntry.place(x=25, y=410, width=270)
     schoolYearLine = Canvas(registerWindow, width=270, height=2.0, bg="#bdb9b1", highlightthickness=0)
@@ -749,9 +723,9 @@ def registerNames():
     # Username
     newUsernameLabel = Label(registerWindow, text="Email ID", font=("yu gothic ui", 15, "bold"),
                              fg="#4f4e4d",
-                             bg="#040405")
+                             bg="#36454F")
     newUsernameLabel.place(x=320, y=190)
-    newUsernameEntry = Entry(registerWindow, highlightthickness=0, relief=FLAT, bg="#040405", fg="#6b6a69",
+    newUsernameEntry = Entry(registerWindow, highlightthickness=0, relief=FLAT, bg="#36454F", fg="#6b6a69",
                              font=("yu gothic ui", 15, "bold"))
     newUsernameEntry.place(x=325, y=230, width=270)
     newUsernameLine = Canvas(registerWindow, width=270, height=2.0, bg="#bdb9b1", highlightthickness=0)
@@ -760,16 +734,16 @@ def registerNames():
     # Password
     newPasswordLabel = Label(registerWindow, text="New Password", font=("yu gothic ui", 15, "bold"),
                              fg="#4f4e4d",
-                             bg="#040405")
+                             bg="#36454F")
     newPasswordLabel.place(x=320, y=280)
-    newPasswordEntry = Entry(registerWindow, highlightthickness=0, relief=FLAT, bg="#040405", fg="#6b6a69",
+    newPasswordEntry = Entry(registerWindow, highlightthickness=0, relief=FLAT, bg="#36454F", fg="#6b6a69",
                              font=("yu gothic ui", 15, "bold"))
     newPasswordEntry.place(x=325, y=320, width=270)
     newPasswordLine = Canvas(registerWindow, width=270, height=2.0, bg="#bdb9b1", highlightthickness=0)
     newPasswordLine.place(x=325, y=350)
 
     # Button
-    registerButton = Button(registerWindow, text="Create Account", font=("yu gothic ui", 15, "bold"), bg="#040405",
+    registerButton = Button(registerWindow, text="Create Account", font=("yu gothic ui", 15, "bold"), bg="#36454F",
                             fg="white", borderwidth=0, command=
                             lambda: getRegisterCredentials(firstNameEntry, lastNameEntry, schoolEntry, schoolYearEntry,
                                                            newUsernameEntry, newPasswordEntry, registerWindow))
@@ -781,34 +755,34 @@ def registerNames():
 def page():
     window = Tk()
     window.geometry("700x600")
-    window.config(bg="#040405")
+    window.config(bg="#36454F")
     window.title('Log-in')
 
-    loginText = Label(window, text="User Log-in", font=('yu gothic ui', 30, 'bold'), fg='white', bg="#040405")
+    loginText = Label(window, text="User Log-in", font=('yu gothic ui', 30, 'bold'), fg='#bdb9b1', bg="#36454F")
     loginText.place(x=20, y=20)
 
-    username = Label(window, text="Email ID", bg="#040405", fg="#4f4e4d", font=("yu gothic ui", 15, "bold"))
+    username = Label(window, text="Email ID", bg="#36454F", fg="#bdb9b1", font=("yu gothic ui", 15, "bold"))
     username.place(x=20, y=110)
-    usernameEntry = Entry(window, highlightthickness=0, relief=FLAT, bg="#040405", fg="#6b6a69",
+    usernameEntry = Entry(window, highlightthickness=0, relief=FLAT, bg="#36454F", fg="#bdb9b1",
                           font=("yu gothic ui", 15, "bold"))
     usernameEntry.place(x=25, y=150, width=270)
     usernameLine = Canvas(window, width=270, height=2.0, bg="#bdb9b1", highlightthickness=0)
     usernameLine.place(x=25, y=190)
 
-    password = Label(window, text="Password", bg="#040405", fg="#4f4e4d", font=("yu gothic ui", 15, "bold"))
+    password = Label(window, text="Password", bg="#36454F", fg="#bdb9b1", font=("yu gothic ui", 15, "bold"))
     password.place(x=20, y=210)
-    passwordEntry = Entry(window, highlightthickness=0, relief=FLAT, bg="#040405", fg="#6b6a69",
+    passwordEntry = Entry(window, highlightthickness=0, relief=FLAT, bg="#36454F", fg="#bdb9b1",
                           font=("yu gothic ui", 15, "bold"))
     passwordEntry.place(x=25, y=250, width=270)
     passwordLine = Canvas(window, width=270, height=2.0, bg="#bdb9b1", highlightthickness=0)
     passwordLine.place(x=25, y=290)
 
-    loginButton = Button(window, text="Click to Login", font=('yu gothic ui', 15, 'bold'), fg="white", bg="#040405",
+    loginButton = Button(window, text="Enter", font=('yu gothic ui', 15, 'bold'), fg="white", bg="#36454F",
                          borderwidth=0, command=lambda: getCredentials(usernameEntry, passwordEntry, window))
     loginButton.place(x=20, y=320)
 
     registerButton = Button(window, text="Do not have an account? Click to Register", font=('yu gothic ui', 15, 'bold'),
-                            fg="white", bg="#040405",
+                            fg="white", bg="#36454F",
                             borderwidth=0, command=lambda: registerNames())
     registerButton.place(x=20, y=360)
 
