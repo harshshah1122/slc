@@ -6,6 +6,17 @@ import openpyxl as op
 import re
 
 
+def show(label, clickr):
+    text = clickr.get()
+    if text == '3 to 5':
+        label.config(text='Homework Pass')
+    if text == '6 to 8':
+        label.config(text='Free Pizza')
+    if text == '9 to 10':
+        label.config(text='School T-Shirt')
+
+
+
 def logout(window):
     window.destroy()
     page()
@@ -128,35 +139,35 @@ def mainSetup(page, page2, page3, page4, page5, page6, page7, page8, page9, page
     line.place(x=70, y=300)
 
     # Flip Buttons
-    sportEventOneButton = Button(page, text='Sport 1', font=('yu gothic ui', 15, 'bold'),
+    sportEventOneButton = Button(page, text='Basketball', font=('yu gothic ui', 15, 'bold'),
                                  command=lambda: show_frame(interior=page, entry=entry, window=window, number='1'),
                                  bg='#36454F', fg='white')
-    sportEventTwoButton = Button(page, text='Sport 2', font=('yu gothic ui', 15, 'bold'),
+    sportEventTwoButton = Button(page, text='Baseball', font=('yu gothic ui', 15, 'bold'),
                                  command=lambda: show_frame(interior=page2, entry=entry, window=window, number='2'),
                                  bg='#36454F', fg='white')
-    sportEventThreeButton = Button(page, text='Sport 3', font=('yu gothic ui', 15, 'bold'),
+    sportEventThreeButton = Button(page, text='Soccer', font=('yu gothic ui', 15, 'bold'),
                                    command=lambda: show_frame(interior=page3, entry=entry, window=window, number='3'),
                                    bg='#36454F', fg='white')
-    sportEventFourButton = Button(page, text='Sport 4', font=('yu gothic ui', 15, 'bold'),
+    sportEventFourButton = Button(page, text='Volleyball', font=('yu gothic ui', 15, 'bold'),
                                   command=lambda: show_frame(interior=page4, entry=entry, window=window, number='4'),
                                   bg='#36454F', fg='white')
-    sportEventFiveButton = Button(page, text='Sport 5', font=('yu gothic ui', 15, 'bold'),
+    sportEventFiveButton = Button(page, text='Chess', font=('yu gothic ui', 15, 'bold'),
                                   command=lambda: show_frame(interior=page5, entry=entry, window=window, number='5'),
                                   bg='#36454F', fg='white')
 
-    funEventOneButton = Button(page, text='Fun 1', font=('yu gothic ui', 15, 'bold'),
+    funEventOneButton = Button(page, text='Prom', font=('yu gothic ui', 15, 'bold'),
                                command=lambda: show_frame(interior=page6, entry=entry, window=window, number='6'),
                                bg='#36454F', fg='white')
-    funEventTwoButton = Button(page, text='Fun 2', font=('yu gothic ui', 15, 'bold'),
+    funEventTwoButton = Button(page, text='Spirit Night', font=('yu gothic ui', 15, 'bold'),
                                command=lambda: show_frame(interior=page7, entry=entry, window=window, number='7'),
                                bg='#36454F', fg='white')
-    funEventThreeButton = Button(page, text='Fun 3', font=('yu gothic ui', 15, 'bold'),
+    funEventThreeButton = Button(page, text='School Rally', font=('yu gothic ui', 15, 'bold'),
                                  command=lambda: show_frame(interior=page8, entry=entry, window=window, number='8'),
                                  bg='#36454F', fg='white')
-    funEventFourButton = Button(page, text='Fun 4', font=('yu gothic ui', 15, 'bold'),
+    funEventFourButton = Button(page, text='Field Trip', font=('yu gothic ui', 15, 'bold'),
                                 command=lambda: show_frame(interior=page9, entry=entry, window=window, number='9'),
                                 bg='#36454F', fg='white')
-    funEventFiveButton = Button(page, text='Fun 5', font=('yu gothic ui', 15, 'bold'), bg='#36454F', fg='white',
+    funEventFiveButton = Button(page, text='School Play', font=('yu gothic ui', 15, 'bold'), bg='#36454F', fg='white',
                                 command=lambda: show_frame(interior=page10, entry=entry, window=window, number='10'))
 
     # Max Columns
@@ -311,7 +322,7 @@ def openInfoSport(var, Type, yourcode, sport):
     newWindow.mainloop()
 
 
-def show_frame(interior):
+def show_frame2(interior):
     interior.tkraise()
 
 
@@ -380,15 +391,15 @@ def dashboard(firstName, lastName, schoolName, schoolYear, emailID, index):
     for frame in (page1, page2, page3, page4):
         frame.grid(row=0, column=0, sticky='nsew')
 
-    show_frame(page1)
+    show_frame2(page1)
     # ======== Page 2 ===========
-    homeButton = Button(page1, text='Home', font=('yu gothic ui', 15, 'bold'), command=lambda: show_frame(page1),
+    homeButton = Button(page1, text='Home', font=('yu gothic ui', 15, 'bold'), command=lambda: show_frame2(page1),
                         bg='#36454F', fg='white')
-    eventButton = Button(page1, text='Events', font=('yu gothic ui', 15, 'bold'), command=lambda: show_frame(page2),
+    eventButton = Button(page1, text='Events', font=('yu gothic ui', 15, 'bold'), command=lambda: show_frame2(page2),
                          bg='#36454F', fg='white')
     attendanceButton = Button(page1, text='Participation', font=('yu gothic ui', 15, 'bold'),
-                              command=lambda: show_frame(page3), bg='#36454F', fg='white')
-    lotteryButton = Button(page1, text='Prizes', font=('yu gothic ui', 15, 'bold'), command=lambda: show_frame(page4),
+                              command=lambda: show_frame2(page3), bg='#36454F', fg='white')
+    lotteryButton = Button(page1, text='Prizes', font=('yu gothic ui', 15, 'bold'), command=lambda: show_frame2(page4),
                            bg='#36454F', fg='white')
 
     # place the buttons
@@ -436,34 +447,34 @@ def dashboard(firstName, lastName, schoolName, schoolYear, emailID, index):
     emailHeaderLabel.place(x=30, y=360)
 
     # Event Buttons
-    eventOneButton = Button(page3, text='Event One', font=('yu gothic ui', 18, 'bold'), bg='#36454F',
+    eventOneButton = Button(page3, text='Basketball', font=('yu gothic ui', 18, 'bold'), bg='#36454F',
                             fg='white',
                             command=lambda: eventoneCode(window, eventOneCode, index, number='One', intNumber=1))
-    eventTwoButton = Button(page3, text='Event Two', font=('yu gothic ui', 18, 'bold'), bg='#36454F',
+    eventTwoButton = Button(page3, text='Baseball', font=('yu gothic ui', 18, 'bold'), bg='#36454F',
                             fg='white',
                             command=lambda: eventoneCode(window, eventTwoCode, index, number='Two', intNumber=2))
-    eventThreeButton = Button(page3, text='Event Three', font=('yu gothic ui', 18, 'bold'), bg='#36454F',
+    eventThreeButton = Button(page3, text='Soccer', font=('yu gothic ui', 18, 'bold'), bg='#36454F',
                               fg='white',
                               command=lambda: eventoneCode(window, eventThreeCode, index, number='Three', intNumber=3))
-    eventFourButton = Button(page3, text='Event Four', font=('yu gothic ui', 18, 'bold'), bg='#36454F',
+    eventFourButton = Button(page3, text='Volleyball', font=('yu gothic ui', 18, 'bold'), bg='#36454F',
                              fg='white',
                              command=lambda: eventoneCode(window, eventFourCode, index, number='Four', intNumber=4))
-    eventFiveButton = Button(page3, text='Event Five', font=('yu gothic ui', 18, 'bold'), bg='#36454F',
+    eventFiveButton = Button(page3, text='Chess', font=('yu gothic ui', 18, 'bold'), bg='#36454F',
                              fg='white',
                              command=lambda: eventoneCode(window, eventFiveCode, index, number='Five', intNumber=5))
-    eventSixButton = Button(page3, text='Event Six', font=('yu gothic ui', 18, 'bold'), bg='#36454F',
+    eventSixButton = Button(page3, text='Prom', font=('yu gothic ui', 18, 'bold'), bg='#36454F',
                             fg='white',
                             command=lambda: eventoneCode(window, eventSixCode, index, number='Six', intNumber=6))
-    eventSevenButton = Button(page3, text='Event Seven', font=('yu gothic ui', 18, 'bold'), bg='#36454F',
+    eventSevenButton = Button(page3, text='Spirit Night', font=('yu gothic ui', 18, 'bold'), bg='#36454F',
                               fg='white',
                               command=lambda: eventoneCode(window, eventSevenCode, index, number='Seven', intNumber=7))
-    eventEightButton = Button(page3, text='Event Eight', font=('yu gothic ui', 18, 'bold'), bg='#36454F',
+    eventEightButton = Button(page3, text='School Rally', font=('yu gothic ui', 18, 'bold'), bg='#36454F',
                               fg='white',
                               command=lambda: eventoneCode(window, eventEightCode, index, number='Eight', intNumber=8))
-    eventNineButton = Button(page3, text='Event Nine', font=('yu gothic ui', 18, 'bold'), bg='#36454F',
+    eventNineButton = Button(page3, text='Field Trip', font=('yu gothic ui', 18, 'bold'), bg='#36454F',
                              fg='white',
                              command=lambda: eventoneCode(window, eventNineCode, index, number='Nine', intNumber=9))
-    eventTenButton = Button(page3, text='Event Nine', font=('yu gothic ui', 18, 'bold'), bg='#36454F',
+    eventTenButton = Button(page3, text='School Play', font=('yu gothic ui', 18, 'bold'), bg='#36454F',
                             fg='white',
                             command=lambda: eventoneCode(window, eventTenCode, index, number='Ten', intNumber=10))
 
@@ -482,58 +493,58 @@ def dashboard(firstName, lastName, schoolName, schoolYear, emailID, index):
     infoLabel.place(x=295, y=140)
 
     # ======== Page 2 ===========
-    homeButton = Button(page2, text='Home', font=('yu gothic ui', 15, 'bold'), command=lambda: show_frame(page1),
+    homeButton = Button(page2, text='Home', font=('yu gothic ui', 15, 'bold'), command=lambda: show_frame2(page1),
                         bg='#36454F', fg='white')
-    eventButton = Button(page2, text='Events', font=('yu gothic ui', 15, 'bold'), command=lambda: show_frame(page2),
+    eventButton = Button(page2, text='Events', font=('yu gothic ui', 15, 'bold'), command=lambda: show_frame2(page2),
                          bg='#36454F', fg='white')
     attendanceButton = Button(page2, text='Participation', font=('yu gothic ui', 15, 'bold'),
-                              command=lambda: show_frame(page3), bg='#36454F', fg='white')
-    lotteryButton = Button(page2, text='Prizes', font=('yu gothic ui', 15, 'bold'), command=lambda: show_frame(page4),
+                              command=lambda: show_frame2(page3), bg='#36454F', fg='white')
+    lotteryButton = Button(page2, text='Prizes', font=('yu gothic ui', 15, 'bold'), command=lambda: show_frame2(page4),
                            bg='#36454F', fg='white')
 
     headerLabel = Label(page2, text='Upcoming Events:', font=('yu gothic ui', 30, 'bold'), bg='#36454F',
                         fg='white')
     headerLabel.place(x=30, y=100)
 
-    eventOneDisplayButton = Button(page2, text='Sport\nOne', font=('yu gothic ui', 30, 'bold'), bg='#556d7c',
+    eventOneDisplayButton = Button(page2, text='Basket-\nball', font=('yu gothic ui', 30, 'bold'), bg='#556d7c',
                                    fg='black',
                                    command=lambda: openInfoSport('1', 'Sport', eventOneCodeExtract, sport="Basketball"))
     eventOneDisplayButton.place(x=30, y=200, width=140, height=150)
-    eventTwoDisplayButton = Button(page2, text='Sport\nTwo', font=('yu gothic ui', 30, 'bold'), bg='#556d7c',
+    eventTwoDisplayButton = Button(page2, text='Base-\nball', font=('yu gothic ui', 30, 'bold'), bg='#556d7c',
                                    fg='black',
                                    command=lambda: openInfoSport('2', 'Sport', eventTwoCodeExtract, sport="Baseball"))
     eventTwoDisplayButton.place(x=180, y=200, width=140, height=150)
-    eventThreeDisplayButton = Button(page2, text='Sport\nThree', font=('yu gothic ui', 30, 'bold'), bg='#556d7c',
+    eventThreeDisplayButton = Button(page2, text='Soccer', font=('yu gothic ui', 30, 'bold'), bg='#556d7c',
                                      fg='black',
                                      command=lambda: openInfoSport('3', 'Sport', eventThreeCodeExtract, sport="Soccer"))
     eventThreeDisplayButton.place(x=330, y=200, width=140, height=150)
-    eventFourDisplayButton = Button(page2, text='Sport\nFour', font=('yu gothic ui', 30, 'bold'), bg='#556d7c',
+    eventFourDisplayButton = Button(page2, text='Volley-\nball', font=('yu gothic ui', 30, 'bold'), bg='#556d7c',
                                     fg='black', command=lambda: openInfoSport('4', 'Sport', eventFourCodeExtract,
                                                                               sport="Volleyball"))
     eventFourDisplayButton.place(x=480, y=200, width=140, height=150)
-    eventFiveDisplayButton = Button(page2, text='Sport\nFive', font=('yu gothic ui', 30, 'bold'), bg='#556d7c',
+    eventFiveDisplayButton = Button(page2, text='Chess', font=('yu gothic ui', 30, 'bold'), bg='#556d7c',
                                     fg='black',
                                     command=lambda: openInfoSport('5', 'Sport', eventFiveCodeExtract, sport="Chess"))
     eventFiveDisplayButton.place(x=630, y=200, width=140, height=150)
-    eventSixDisplayButton = Button(page2, text='Fun\nOne', font=('yu gothic ui', 30, 'bold'), bg='#556d7c',
+    eventSixDisplayButton = Button(page2, text='Prom', font=('yu gothic ui', 30, 'bold'), bg='#556d7c',
                                    fg='black',
                                    command=lambda: openInfoSport('1', 'Fun', eventSixCodeExtract, sport="Prom"))
     eventSixDisplayButton.place(x=30, y=400, width=140, height=150)
-    eventSevenDisplayButton = Button(page2, text='Fun\nTwo', font=('yu gothic ui', 30, 'bold'), bg='#556d7c',
+    eventSevenDisplayButton = Button(page2, text='Spirit\nNight', font=('yu gothic ui', 30, 'bold'), bg='#556d7c',
                                      fg='black', command=lambda: openInfoSport('2', 'Fun', eventSevenCodeExtract,
                                                                                sport="Spirit Night"))
     eventSevenDisplayButton.place(x=180, y=400, width=140, height=150)
-    eventEightDisplayButton = Button(page2, text='Fun\nThree', font=('yu gothic ui', 30, 'bold'), bg='#556d7c',
+    eventEightDisplayButton = Button(page2, text='School\nRally', font=('yu gothic ui', 30, 'bold'), bg='#556d7c',
                                      fg='black', command=lambda: openInfoSport('3', 'Fun', eventEightCodeExtract,
-                                                                               sport="Homecoming"))
+                                                                               sport="School Rally"))
     eventEightDisplayButton.place(x=330, y=400, width=140, height=150)
-    eventNineDisplayButton = Button(page2, text='Fun\nFour', font=('yu gothic ui', 30, 'bold'), bg='#556d7c',
+    eventNineDisplayButton = Button(page2, text='Field\nTrip', font=('yu gothic ui', 30, 'bold'), bg='#556d7c',
                                     fg='black', command=lambda: openInfoSport('4', 'Fun', eventNineCodeExtract,
-                                                                              sport="International Night"))
+                                                                              sport="Field Trip"))
     eventNineDisplayButton.place(x=480, y=400, width=140, height=150)
-    eventTenDisplayButton = Button(page2, text='Fun\nFive', font=('yu gothic ui', 30, 'bold'), bg='#556d7c',
+    eventTenDisplayButton = Button(page2, text='School\nPlay', font=('yu gothic ui', 30, 'bold'), bg='#556d7c',
                                    fg='black',
-                                   command=lambda: openInfoSport('5', 'Fun', eventTenCodeExtract, sport="Drama"))
+                                   command=lambda: openInfoSport('5', 'Fun', eventTenCodeExtract, sport="School Play"))
     eventTenDisplayButton.place(x=630, y=400, width=140, height=150)
 
     # place the buttons
@@ -544,13 +555,13 @@ def dashboard(firstName, lastName, schoolName, schoolYear, emailID, index):
     lotteryButton.place(x=600, y=0, width=200)
 
     # ======== Page 3 ===========
-    homeButton = Button(page3, text='Home', font=('yu gothic ui', 15, 'bold'), command=lambda: show_frame(page1),
+    homeButton = Button(page3, text='Home', font=('yu gothic ui', 15, 'bold'), command=lambda: show_frame2(page1),
                         bg='#36454F', fg='white')
-    eventButton = Button(page3, text='Events', font=('yu gothic ui', 15, 'bold'), command=lambda: show_frame(page2),
+    eventButton = Button(page3, text='Events', font=('yu gothic ui', 15, 'bold'), command=lambda: show_frame2(page2),
                          bg='#36454F', fg='white')
     attendanceButton = Button(page3, text='Participation', font=('yu gothic ui', 15, 'bold'),
-                              command=lambda: show_frame(page3), bg='#36454F', fg='white')
-    lotteryButton = Button(page3, text='Prizes', font=('yu gothic ui', 15, 'bold'), command=lambda: show_frame(page4),
+                              command=lambda: show_frame2(page3), bg='#36454F', fg='white')
+    lotteryButton = Button(page3, text='Prizes', font=('yu gothic ui', 15, 'bold'), command=lambda: show_frame2(page4),
                            bg='#36454F', fg='white')
 
     # place the buttons
@@ -561,13 +572,13 @@ def dashboard(firstName, lastName, schoolName, schoolYear, emailID, index):
     lotteryButton.place(x=600, y=0, width=200)
 
     # ======== Page 4-Prizes ===========
-    homeButton = Button(page4, text='Home', font=('yu gothic ui', 15, 'bold'), command=lambda: show_frame(page1),
+    homeButton = Button(page4, text='Home', font=('yu gothic ui', 15, 'bold'), command=lambda: show_frame2(page1),
                         bg='#36454F', fg='white')
-    eventButton = Button(page4, text='Events', font=('yu gothic ui', 15, 'bold'), command=lambda: show_frame(page2),
+    eventButton = Button(page4, text='Events', font=('yu gothic ui', 15, 'bold'), command=lambda: show_frame2(page2),
                          bg='#36454F', fg='white')
     attendanceButton = Button(page4, text='Participation', font=('yu gothic ui', 15, 'bold'),
-                              command=lambda: show_frame(page3), bg='#36454F', fg='white')
-    lotteryButton = Button(page4, text='Prizes', font=('yu gothic ui', 15, 'bold'), command=lambda: show_frame(page4),
+                              command=lambda: show_frame2(page3), bg='#36454F', fg='white')
+    lotteryButton = Button(page4, text='Prizes', font=('yu gothic ui', 15, 'bold'), command=lambda: show_frame2(page4),
                            bg='#36454F', fg='white')
 
     scoreBoardLabel = Label(page4, text='Scoreboard:', font=('yu gothic ui', 30, 'bold'), bg='#36454F', fg='white')
@@ -581,13 +592,26 @@ def dashboard(firstName, lastName, schoolName, schoolYear, emailID, index):
 
     df = pd.read_excel('Book1.xlsx')
     maxCol = len(df['First Name'])
-    yourPosition(index, page4, x=140, y=180, tot=maxCol, x2=170, y2=230, x3=30, y3=340, x4=30, y4=460)
+    yourPosition(index, page4, x=140, y=180, tot=maxCol, x2=170, y2=230, x3=30, y3=340, x4=30, y4=440)
 
     leaderNameLabel = Label(page4, text='Leader: ', font=('yu gothic ui', 20, 'bold'), bg='#36454F', fg='white')
     leaderNameLabel.place(x=30, y=300)
 
-    showPrize = Label(page4, text="Your Prize:  ", font=('yu gothic ui', 16, 'bold'), bg='#36454F', fg='white')
-    showPrize.place(x=30, y=420)
+    showPrize = Label(page4, text="Your Prize:  ", font=('yu gothic ui', 20, 'bold'), bg='#36454F', fg='white')
+    showPrize.place(x=30, y=400)
+
+    prizeOptions = ['3 to 5', '6 to 8', '9 to 10']
+    clickr = StringVar()
+    clickr.set('Points Bracket')
+    showPrize = Label(page4, text="Potential Prizes:", font=('yu gothic ui', 20, 'bold'), bg='#36454F', fg='white')
+    showPrize.place(x=400, y=400)
+    showPrizeButton = Button(page4, text="Show Prizes", font=('yu gothic ui', 14, 'bold'), bg='#36454F', fg='white',
+                             command=lambda: show(prizeLabel, clickr), highlightthickness=0)
+    showPrizeButton.place(x=540, y=350, width=120, height=50)
+    dropdownMenu = OptionMenu(page4, clickr, *prizeOptions)
+    dropdownMenu.place(x=400, y=360)
+    prizeLabel = Label(page4, text=" ", font=('yu gothic ui', 14, 'bold'), bg='#36454F', fg='white')
+    prizeLabel.place(x=400, y=440)
 
     # place the buttons
 
@@ -682,7 +706,7 @@ def registerNames():
 
     # Info Entry
     # First Name
-    firstNameLabel = Label(registerWindow, text="First Name", font=("yu gothic ui", 15, "bold"), fg="#4f4e4d",
+    firstNameLabel = Label(registerWindow, text="First Name", font=("yu gothic ui", 15, "bold"), fg="white",
                            bg="#36454F")
     firstNameLabel.place(x=20, y=100)
     firstNameEntry = Entry(registerWindow, highlightthickness=0, relief=FLAT, bg="#36454F", fg="#6b6a69",
@@ -692,10 +716,10 @@ def registerNames():
     firstNameLine.place(x=25, y=170)
 
     # Last Name
-    lastNameLabel = Label(registerWindow, text="Last Name", font=("yu gothic ui", 15, "bold"), fg="#4f4e4d",
+    lastNameLabel = Label(registerWindow, text="Last Name", font=("yu gothic ui", 15, "bold"), fg="white",
                           bg="#36454F")
     lastNameLabel.place(x=20, y=190)
-    lastNameEntry = Entry(registerWindow, highlightthickness=0, relief=FLAT, bg="#36454F", fg="#6b6a69",
+    lastNameEntry = Entry(registerWindow, highlightthickness=0, relief=FLAT, bg="#36454F", fg="white",
                           font=("yu gothic ui", 15, "bold"))
     lastNameEntry.place(x=25, y=230, width=270)
     lastNameLine = Canvas(registerWindow, width=270, height=2.0, bg="#bdb9b1", highlightthickness=0)
@@ -703,29 +727,30 @@ def registerNames():
 
     # School
     schoolLabel = Label(registerWindow, text="School Name (Abbreviated)", font=("yu gothic ui", 15, "bold"),
-                        fg="#4f4e4d",
+                        fg="white",
                         bg="#36454F")
     schoolLabel.place(x=20, y=280)
-    schoolEntry = Entry(registerWindow, highlightthickness=0, relief=FLAT, bg="#36454F", fg="#6b6a69",
+    schoolEntry = Entry(registerWindow, highlightthickness=0, relief=FLAT, bg="#36454F", fg="white",
                         font=("yu gothic ui", 15, "bold"))
     schoolEntry.place(x=25, y=320, width=270)
     schoolLine = Canvas(registerWindow, width=270, height=2.0, bg="#bdb9b1", highlightthickness=0)
     schoolLine.place(x=25, y=350)
 
     # School Year
-    schoolYearLabel = Label(registerWindow, text="School Year (in numbers)", font=("yu gothic ui", 15, "bold"),
-                            fg="#4f4e4d",
+    schoolYearLabel = Label(registerWindow, text="Grade", font=("yu gothic ui", 15, "bold"),
+                            fg="white",
                             bg="#36454F")
     schoolYearLabel.place(x=20, y=370)
-    schoolYearEntry = Entry(registerWindow, highlightthickness=0, relief=FLAT, bg="#36454F", fg="#6b6a69",
-                            font=("yu gothic ui", 15, "bold"))
+    schoolYearEntry = Spinbox(registerWindow, from_=0, to=12, highlightthickness=0, relief=FLAT, bg="#36454F",
+                              fg="white",
+                              font=("yu gothic ui", 15, "bold"))
     schoolYearEntry.place(x=25, y=410, width=270)
     schoolYearLine = Canvas(registerWindow, width=270, height=2.0, bg="#bdb9b1", highlightthickness=0)
     schoolYearLine.place(x=25, y=440)
 
     # Username
     newUsernameLabel = Label(registerWindow, text="Email ID", font=("yu gothic ui", 15, "bold"),
-                             fg="#4f4e4d",
+                             fg="white",
                              bg="#36454F")
     newUsernameLabel.place(x=320, y=190)
     newUsernameEntry = Entry(registerWindow, highlightthickness=0, relief=FLAT, bg="#36454F", fg="#6b6a69",
@@ -736,7 +761,7 @@ def registerNames():
 
     # Password
     newPasswordLabel = Label(registerWindow, text="New Password", font=("yu gothic ui", 15, "bold"),
-                             fg="#4f4e4d",
+                             fg="white",
                              bg="#36454F")
     newPasswordLabel.place(x=320, y=280)
     newPasswordEntry = Entry(registerWindow, highlightthickness=0, relief=FLAT, bg="#36454F", fg="#6b6a69",
